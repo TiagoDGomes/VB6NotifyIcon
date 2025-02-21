@@ -1,0 +1,40 @@
+===========
+Old Windows
+===========
+
+This version adds a few more checks for Windows < Win2K.
+
+BalloonShow
+-----------
+
+This version changes the BalloonShow() method to return a
+Boolean result.  It returns False for OS < Win2K and skips
+trying to show a balloon tip.
+
+This makes parts of Demo.exe get "skipped" before Win2K, the
+parts related to balloon tips.
+
+Calling Shell_NotifyIcon
+------------------------
+
+In early versions of Windows (Win95 and Win98 if not Me and NT
+4.0) the unicows.dll does not seem to properly "shim" calls to
+Shell_NotifyIconW.  This means the calls do succeed but the
+expected actions do not occur.
+
+So now NotifyIcon.ctl uses conditional calls to either the
+ANSI or the Unicode entrypoint based on the Shell version that
+was detected during UserControl_Initialize.
+
+
+==========
+Misc. Bugs
+==========
+
+Found at least one small bug.
+
+ToolTip Property
+----------------
+
+Had been calling PropertyChanged in its Property Get instead
+of Property Let.
